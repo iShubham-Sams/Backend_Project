@@ -6,6 +6,7 @@ const app: Application = express();
 app.get("/", (req: Request, res: Response) => {
   res.send("Cool, it is running! Or is it?");
 });
+console.log("changes");
 
 app.listen(port, () => {
   console.log("Yup! My Express Server is running on Port", port);
