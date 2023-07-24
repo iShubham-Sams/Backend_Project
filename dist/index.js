@@ -16,18 +16,35 @@ app.get("/", (req, res) => {
     res.send("Cool, it is running! Or is it?");
 });
 app.post("/create-contact", (req, res) => {
+    console.log(req.body);
     contact_1.default.create({
         name: req.body.name,
         phone: req.body.phone,
     })
         .then((newContact) => {
-        console.log("*******", newContact);
         return res.redirect("back");
     })
         .catch((err) => {
         console.log(err);
         return;
     });
+});
+app.get("/contact", (req, res) => {
+    contact_1.default.find({})
+        .then((data) => {
+        return res.send(data);
+    })
+        .catch((err) => {
+        console.log(err);
+    });
+});
+app.delete("/delete-contact", (req, res) => {
+    let contactId = req.query.id;
+    contact_1.default.findByIdAndDelete(contactId)
+        .then((data) => {
+        return res.send("Successfuly delete");
+    })
+        .catch((error) => console.log(error));
 });
 app.listen(port, () => {
     console.log("Yup! My Express Server is running on Port", port);

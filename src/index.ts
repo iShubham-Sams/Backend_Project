@@ -13,18 +13,38 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.post("/create-contact", (req, res) => {
+  console.log(req.body);
+
   Contact.create({
     name: req.body.name,
     phone: req.body.phone,
   })
     .then((newContact) => {
-      console.log("*******", newContact);
       return res.redirect("back");
     })
     .catch((err: Error) => {
       console.log(err);
       return;
     });
+});
+
+app.get("/contact", (req, res) => {
+  Contact.find({})
+    .then((data) => {
+      return res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.delete("/delete-contact", (req, res) => {
+  let contactId = req.query.id;
+  Contact.findByIdAndDelete(contactId)
+    .then((data) => {
+      return res.send("Successfuly delete");
+    })
+    .catch((error) => console.log(error));
 });
 
 app.listen(port, () => {
