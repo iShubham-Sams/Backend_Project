@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
+require("dotenv").config();
+const uri = process.env.DATABASE_URL ?? "";
 
 mongoose
-  .connect(
-    "mongodb+srv://shubhambhandari12345hb:HgI8XuhTeN7em1OK@cluster0.ucgw00u.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(uri)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err: Error) => console.error("Error connecting to MongoDB:", err));
